@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MBteaI ― あなたに合う福岡の日本茶店</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E2D0;
+    --paper-2:#DCD5BE;
+    --ink:#241F17;
+    --ink-soft:#5B5344;
+    --matcha:#3F5A35;
+    --matcha-deep:#2B3F24;
+    --hoji:#8B5A34;
+    --gold:#AD8748;
+    --line:#C6BC9C;
+    --card-bg:#F1EDDF;
+    --danger:#8C4A3A;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#1A170F;
+      --paper-2:#211D14;
+      --ink:#EAE3CE;
+      --ink-soft:#B7AE93;
+      --matcha:#8CAE79;
+      --matcha-deep:#B7D2A2;
+      --hoji:#CB9764;
+      --gold:#D8B577;
+      --line:#3B3627;
+      --card-bg:#221E15;
+      --danger:#D19484;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1A170F;
+    --paper-2:#211D14;
+    --ink:#EAE3CE;
+    --ink-soft:#B7AE93;
+    --matcha:#8CAE79;
+    --matcha-deep:#B7D2A2;
+    --hoji:#CB9764;
+    --gold:#D8B577;
+    --line:#3B3627;
+    --card-bg:#221E15;
+    --danger:#D19484;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Zen Kaku Gothic New', sans-serif;
+    line-height:1.75;
+    min-height:100vh;
+  }
+  .wrap{
+    max-width:720px;
+    margin:0 auto;
+    padding:2.5rem 1.4rem 5rem;
+  }
+  h1,h2,h3{
+    font-family:'Shippori Mincho', serif;
+    font-weight:600;
+    margin:0 0 .6em;
+    color:var(--ink);
+  }
+  a{color:var(--matcha-deep);}
+
+  /* ---------- Header / hero ---------- */
+  .brand{
+    display:flex;
+    align-items:baseline;
+    gap:.6rem;
+    margin-bottom:.4rem;
+  }
+  .brand-mark{
+    font-family:'Shippori Mincho', serif;
+    font-size:1.05rem;
+    letter-spacing:.14em;
+    color:var(--matcha);
+  }
+  .hero{
+    padding:1.6rem 0 2.2rem;
+    border-bottom:1px solid var(--line);
+    margin-bottom:2.2rem;
+    position:relative;
+  }
+  .hero h1{
+    font-size:clamp(1.7rem, 5vw, 2.5rem);
+    line-height:1.45;
+    max-width:14ch;
+  }
+  .hero p{
+    color:var(--ink-soft);
+    max-width:46ch;
+    font-size:.98rem;
+  }
+  .steam{
+    position:absolute;
+    right:.2rem;
+    top:.4rem;
+    width:46px;
+    height:70px;
+    opacity:.85;
+  }
+  .steam path{
+    fill:none;
+    stroke:var(--matcha);
+    stroke-width:2;
+    stroke-linecap:round;
+    stroke-dasharray:120;
+    stroke-dashoffset:120;
+    animation:rise 2.6s ease-out forwards;
+  }
+  .steam path:nth-child(2){animation-delay:.25s;}
+  @keyframes rise{ to{stroke-dashoffset:0;} }
+  @media (prefers-reduced-motion: reduce){
+    .steam path{animation:none; stroke-dashoffset:0;}
+  }
+
+  /* ---------- Progress rail ---------- */
+  .rail{
+    display:flex;
+    gap:.5rem;
+    margin-bottom:2rem;
+  }
+  .rail-dot{
+    flex:1;
+    height:4px;
+    background:var(--line);
+    border-radius:2px;
+    position:relative;
+    overflow:hidden;
+  }
+  .rail-dot.done, .rail-dot.active{background:var(--matcha);}
+  .rail-label{
+    display:flex;
+    justify-content:space-between;
+    font-size:.75rem;
+    color:var(--ink-soft);
+    margin:-1.6rem 0 1.6rem;
+  }
+
+  /* ---------- Cards / panels ---------- */
+  .panel{
+    background:var(--card-bg);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:1.8rem 1.6rem;
+  }
+  .kanji-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:2.1rem;
+    height:2.1rem;
+    border:1px solid var(--matcha);
+    color:var(--matcha-deep);
+    font-family:'Shippori Mincho', serif;
+    border-radius:50%;
+    margin-right:.6rem;
+    flex:none;
+    font-size:1rem;
+  }
+  .q-title{
+    display:flex;
+    align-items:center;
+    font-size:1.2rem;
+    margin-bottom:1.1rem;
+  }
+  .q-sub{
+    color:var(--ink-soft);
+    font-size:.9rem;
+    margin:-.6rem 0 1.2rem 2.7rem;
+  }
+
+  .choices{
+    display:flex;
+    flex-direction:column;
+    gap:.6rem;
+  }
+  .choice{
+    display:flex;
+    align-items:flex-start;
+    gap:.7rem;
+    padding:.75rem .9rem;
+    border:1px solid var(--line);
+    border-radius:3px;
+    cursor:pointer;
+    background:transparent;
+    transition:border-color .15s, background .15s;
+  }
+  .choice:hover{border-color:var(--matcha);}
+  .choice input{margin-top:.25rem; accent-color:var(--matcha);}
+  .choice.checked{
+    border-color:var(--matcha);
+    background:color-mix(in srgb, var(--matcha) 10%, transparent);
+  }
+  .choice span{font-size:.96rem;}
+
+  textarea{
+    width:100%;
+    font-family:inherit;
+    font-size:.96rem;
+    padding:.8rem .9rem;
+    border:1px solid var(--line);
+    border-radius:3px;
+    background:transparent;
+    color:var(--ink);
+    resize:vertical;
+    min-height:5.5rem;
+  }
+  textarea:focus, .choice:focus-within, button:focus-visible{
+    outline:2px solid var(--matcha);
+    outline-offset:2px;
+  }
+
+  .nav-row{
+    display:flex;
+    justify-content:space-between;
+    margin-top:2rem;
+    gap:1rem;
+  }
+  button{
+    font-family:'Zen Kaku Gothic New', sans-serif;
+    font-size:.95rem;
+    padding:.75rem 1.5rem;
+    border-radius:3px;
+    border:1px solid var(--matcha);
+    background:transparent;
+    color:var(--matcha-deep);
+    cursor:pointer;
+    transition:background .15s, color .15s;
+  }
+  button.primary{
+    background:var(--matcha);
+    color:var(--paper);
+    border-color:var(--matcha);
+  }
+  button.primary:hover{background:var(--matcha-deep); border-color:var(--matcha-deep);}
+  button.ghost{border-color:var(--line); color:var(--ink-soft);}
+  button.ghost:hover{border-color:var(--ink-soft);}
+  button:disabled{opacity:.4; cursor:not-allowed;}
+
+  /* ---------- Loading ---------- */
+  .loading{
+    text-align:center;
+    padding:3.5rem 1rem;
+  }
+  .leaf{
+    width:34px; height:34px;
+    margin:0 auto 1.4rem;
+    border:2px solid var(--matcha);
+    border-top-color:transparent;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .loading p{color:var(--ink-soft); font-size:.95rem;}
+
+  .error-box{
+    border:1px solid var(--danger);
+    color:var(--danger);
+    padding:1.2rem 1.3rem;
+    border-radius:3px;
+    font-size:.92rem;
+    margin-bottom:1.5rem;
+  }
+
+  /* ---------- Results ---------- */
+  .results-head{
+    margin-bottom:1.6rem;
+  }
+  .results-head p{color:var(--ink-soft); font-size:.92rem;}
+
+  .shop-card{
+    background:var(--card-bg);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:1.6rem 1.5rem;
+    margin-bottom:1.4rem;
+  }
+  .shop-top{
+    display:flex;
+    align-items:flex-start;
+    gap:.9rem;
+    margin-bottom:.3rem;
+  }
+  .rank{
+    font-family:'Shippori Mincho', serif;
+    font-size:1.6rem;
+    color:var(--gold);
+    line-height:1;
+    flex:none;
+  }
+  .shop-name{
+    font-family:'Shippori Mincho', serif;
+    font-size:1.25rem;
+    margin:0;
+  }
+  .shop-area{
+    color:var(--ink-soft);
+    font-size:.85rem;
+  }
+  .match{
+    margin-left:auto;
+    text-align:right;
+    flex:none;
+  }
+  .match-pct{
+    font-family:'Shippori Mincho', serif;
+    font-size:1.4rem;
+    color:var(--matcha-deep);
+  }
+  .match-label{font-size:.72rem; color:var(--ink-soft);}
+
+  .summary-line{
+    margin:.7rem 0 1rem;
+    font-size:.98rem;
+  }
+
+  table.match-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:.88rem;
+    margin:1rem 0 1.1rem;
+  }
+  table.match-table td{
+    padding:.4rem .2rem;
+    border-bottom:1px solid var(--line);
+  }
+  table.match-table td:first-child{color:var(--ink-soft); width:45%;}
+  table.match-table td:last-child{text-align:right; letter-spacing:.06em; color:var(--gold);}
+
+  .why{font-size:.92rem; margin:.3rem 0;}
+  .why b{color:var(--matcha-deep); font-weight:700;}
+  .caution{
+    font-size:.88rem;
+    color:var(--ink-soft);
+    border-left:2px solid var(--hoji);
+    padding-left:.7rem;
+    margin-top:.7rem;
+  }
+  .evidence-row{
+    display:flex;
+    align-items:center;
+    gap:.4rem;
+    font-size:.78rem;
+    color:var(--ink-soft);
+    margin-top:.9rem;
+  }
+  .badge{font-size:.9rem;}
+
+  .again{
+    display:block;
+    margin:2.4rem auto 0;
+  }
+
+  .free-note{
+    font-size:.8rem;
+    color:var(--ink-soft);
+    margin-top:2.4rem;
+    border-top:1px solid var(--line);
+    padding-top:1rem;
+  }
+
+  @media (max-width:480px){
+    .q-sub{margin-left:0;}
+    .shop-top{flex-wrap:wrap;}
+    .match{margin-left:0; text-align:left;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand"><span class="brand-mark">茶</span><span style="font-size:.85rem;color:var(--ink-soft);">MBteaI</span></div>
+
+  <div class="hero">
+    <svg class="steam" viewBox="0 0 46 70">
+      <path d="M14 66 C 8 50, 22 46, 16 30 C 10 14, 22 10, 18 2"/>
+      <path d="M30 66 C 24 52, 36 48, 30 34 C 24 20, 34 16, 30 4"/>
+    </svg>
+    <h1>あなたに合う、<br>福岡の日本茶店を探す。</h1>
+    <p>8つの質問に答えると、市内の専門店から近郊の産地・お茶バーまで含めて調べた実在するお店の情報をもとに、相性のよい3軒をお伝えします。</p>
+  </div>
+
+  <div id="app"></div>
+
+  <div class="free-note" id="footnote" style="display:none;">
+    店舗情報は、公式サイトや公開されている紹介記事をもとにまとめたものです（アプリ作成時点の情報）。最新の営業状況やメニューは、訪問前に各店舗の公式情報でご確認ください。
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    key: 'regions',
+    type: 'multi',
+    title: 'どこの市やその近郊のお茶屋さんをお探しですか？',
+    sub: '複数可。迷ったら「特にこだわらない」でOK',
+    options: [
+      '福岡市内（天神・博多など中心部〜市内各所）',
+      '糸島市',
+      '八女市・星野村（お茶の産地）',
+      '北九州市',
+      '佐賀県（佐賀市・嬉野市・唐津市）',
+      '特にこだわらない（全エリアから探す）'
+    ]
+  },
+  {
+    key: 'purpose',
+    type: 'multi',
+    title: 'どんなお店を探していますか？',
+    sub: '当てはまるものを選んでください（複数可）',
+    options: [
+      '日本茶をしっかり楽しみたい',
+      '気軽にお茶を飲みたい',
+      '茶葉を買いたい',
+      '抹茶・スイーツを楽しみたい',
+      '茶器を見たい',
+      'お茶について教えてほしい'
+    ]
+  },
+  {
+    key: 'teaTypes',
+    type: 'multi',
+    title: 'どんなお茶が飲みたいですか？',
+    sub: '複数可。お店の絞り込みに使います',
+    options: ['緑茶（煎茶・玉露など）', '抹茶', 'ほうじ茶', '紅茶（和紅茶・洋紅茶）', 'お茶を使ったカクテル・お酒', 'こだわらない']
+  },
+  {
+    key: 'atmosphere',
+    type: 'multi',
+    title: 'お店の雰囲気は？',
+    sub: '複数可',
+    options: ['静か', 'おしゃれ', 'カジュアル', '本格的', '店員さんと話したい']
+  },
+  {
+    key: 'scene',
+    type: 'single',
+    title: 'どんなシーンで利用しますか？',
+    sub: '',
+    options: ['一人でゆっくり', '友人とおしゃべりしながら', 'デートや特別な日に', '観光のついでに気軽に']
+  },
+  {
+    key: 'experience',
+    type: 'single',
+    title: 'あなたのお茶経験は？',
+    sub: '',
+    options: ['初心者', '少し詳しい', 'かなり好き', 'お茶関係者・専門家']
+  },
+  {
+    key: 'interaction',
+    type: 'single',
+    title: 'お店の人との会話は？',
+    sub: '',
+    options: ['積極的に話したい', 'すこし話せたら嬉しい', 'あまり話しかけられたくない']
+  },
+  {
+    key: 'freeText',
+    type: 'text',
+    title: 'その他の希望があれば',
+    sub: '任意。例：「大学生なので入りやすいところがいい」',
+  }
+];
+
+const state = { step:0, regions:[], purpose:[], teaTypes:[], atmosphere:[], scene:'', experience:'', interaction:'', freeText:'' };
+const app = document.getElementById('app');
+
+function toggleMulti(key, val){
+  const arr = state[key];
+  const i = arr.indexOf(val);
+  if(i>-1) arr.splice(i,1); else arr.push(val);
+  renderStep();
+}
+function setSingle(key,val){ state[key]=val; renderStep(); }
+
+function canProceed(q){
+  if(q.type==='multi') return state[q.key].length>0;
+  if(q.type==='single') return !!state[q.key];
+  return true; // free text optional
+}
+
+function renderRail(){
+  const total = QUESTIONS.length;
+  let dots = '';
+  for(let i=0;i<total;i++){
+    const cls = i<state.step ? 'done' : (i===state.step ? 'active' : '');
+    dots += `<div class="rail-dot ${cls}"></div>`;
+  }
+  return `<div class="rail">${dots}</div>
+  <div class="rail-label"><span>問 ${state.step+1} / ${total}</span><span>${QUESTIONS[state.step].type==='text' ? '最後の質問' : ''}</span></div>`;
+}
+
+const KANJI = ['一','二','三','四','五','六','七','八','九'];
+
+function renderStep(){
+  const q = QUESTIONS[state.step];
+  let body = '';
+  if(q.type==='multi'){
+    body = `<div class="choices">` + q.options.map(o=>{
+      const checked = state[q.key].includes(o);
+      return `<label class="choice ${checked?'checked':''}">
+        <input type="checkbox" ${checked?'checked':''} onchange="toggleMulti('${q.key}','${o}')">
+        <span>${o}</span>
+      </label>`;
+    }).join('') + `</div>`;
+  } else if(q.type==='single'){
+    body = `<div class="choices">` + q.options.map(o=>{
+      const checked = state[q.key]===o;
+      return `<label class="choice ${checked?'checked':''}">
+        <input type="radio" name="${q.key}" ${checked?'checked':''} onchange="setSingle('${q.key}','${o}')">
+        <span>${o}</span>
+      </label>`;
+    }).join('') + `</div>`;
+  } else if(q.type==='text'){
+    body = `<textarea placeholder="自由にご記入ください" oninput="state.freeText=this.value">${state.freeText}</textarea>`;
+  }
+
+  const isLast = state.step === QUESTIONS.length-1;
+  const nextDisabled = !canProceed(q);
+
+  app.innerHTML = `
+    ${renderRail()}
+    <div class="panel">
+      <div class="q-title"><span class="kanji-num">${KANJI[state.step]}</span>${q.title}</div>
+      ${q.sub ? `<div class="q-sub">${q.sub}</div>` : ''}
+      ${body}
+      <div class="nav-row">
+        <button class="ghost" onclick="prevStep()" ${state.step===0?'disabled':''}>戻る</button>
+        <button class="primary" onclick="${isLast?'submit()':'nextStep()'}" ${nextDisabled?'disabled':''}>
+          ${isLast ? 'お店を探す' : '次へ'}
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function nextStep(){ if(state.step<QUESTIONS.length-1){ state.step++; renderStep(); } }
+function prevStep(){ if(state.step>0){ state.step--; renderStep(); } }
+
+// ---------------- Shop dataset (researched from public sources) ----------------
+// Profiles are compiled from official sites / published articles about each shop,
+// current as of when this app was built. Ratings 0-5 are editorial judgments based
+// on that material, not live data — see each shop's "source" and "confidence".
+const SHOPS = [
+  {
+    name: '光安青霞園茶舗 本店',
+    region: 'fukuoka',
+    area: '博多区・呉服町',
+    area_tier: 1,
+    tea_types: ['green','matcha','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:3, staff_interaction:3, quiet:4, casual:2, traditional:5, fashionable:2, sweets:3, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '創業300余年、八女茶の量り売りと喫茶を併設する老舗',
+    reason: '1716年創業の老舗で本格的な八女茶を量り売り。店内の喫茶室でお茶とお茶菓子も楽しめる',
+    caution: 'カジュアルな一杯というより、しっかりお茶に向き合いたい人向け',
+    source: '食べログまとめ・日本茶生活の紹介記事',
+    confidence: 'high'
+  },
+  {
+    name: 'MACCHA HOUSE 抹茶館 天神地下街',
+    region: 'fukuoka',
+    area: '中央区・天神（天神地下街）',
+    area_tier: 1,
+    tea_types: ['matcha','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:5, staff_interaction:2, quiet:1, casual:5, traditional:2, fashionable:4, sweets:5, tea_leaf_purchase:1, solo_friendly:5 },
+    summary: '京都の老舗「森半」の宇治抹茶を使ったドリンク・スイーツの抹茶カフェ',
+    reason: '天神地下街で気軽に立ち寄れて、抹茶の濃さも選べる。抹茶ティラミスなどスイーツも充実',
+    caution: '茶葉の購入や、静かにお茶と向き合いたい人には不向き',
+    source: '天神経済新聞・天神サイトの紹介記事',
+    confidence: 'high'
+  },
+  {
+    name: '茶舗ふりゅう',
+    region: 'fukuoka',
+    area: '中央区・清川（薬院・天神近く）',
+    area_tier: 1,
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:4, staff_interaction:5, quiet:4, casual:2, traditional:4, fashionable:3, sweets:1, tea_leaf_purchase:5, solo_friendly:4 },
+    summary: '一人一人に向き合い、シングルオリジン煎茶を丁寧に紹介する専門店',
+    reason: '静岡産シングルオリジン煎茶や常滑急須を扱い、店主がお茶の魅力を一人一人に説明',
+    caution: 'スイーツ目当てで行くと少し物足りないかも',
+    source: '公式サイト・日本茶生活の紹介記事',
+    confidence: 'high'
+  },
+  {
+    name: '蘊-on-日本茶専門店',
+    region: 'fukuoka',
+    area: '城南区・友丘',
+    area_tier: 2,
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:3, staff_interaction:5, quiet:5, casual:1, traditional:5, fashionable:2, sweets:1, tea_leaf_purchase:4, solo_friendly:4 },
+    summary: '店主が全国から選んだお茶を、じっくり学びながら味わえる店',
+    reason: '「日本茶塾」など学びの場を持ち、店主のこだわりを対話しながら深く知ることができる',
+    caution: '住宅街にあり中心部からは少し距離があるので、事前にアクセスを確認して',
+    source: '公式サイト',
+    confidence: 'medium'
+  },
+  {
+    name: 'temae',
+    region: 'fukuoka',
+    area: '中央区・渡辺通',
+    area_tier: 1,
+    tea_types: ['matcha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:5, staff_interaction:3, quiet:4, casual:4, traditional:4, fashionable:4, sweets:4, tea_leaf_purchase:2, solo_friendly:5 },
+    summary: '長屋をリノベーションした、気軽に本格茶道・日本茶を楽しめる隠れ家カフェ',
+    reason: '1階のカフェで抹茶ソーダやティラミスを気軽に楽しめ、2階は茶室のレンタルスペースにもなっている',
+    caution: '駐車場がないので、公共交通機関でのアクセスがおすすめ',
+    source: 'ジモタイムズ・運営会社namiaの紹介記事',
+    confidence: 'medium'
+  },
+  {
+    name: '& LOCALS 大濠公園',
+    region: 'fukuoka',
+    area: '中央区・大濠公園',
+    area_tier: 1,
+    tea_types: ['green'],
+    alcohol: false,
+    profile: { tea_quality:2, beginner_friendly:4, staff_interaction:2, quiet:3, casual:5, traditional:1, fashionable:5, sweets:3, tea_leaf_purchase:2, solo_friendly:3 },
+    summary: '大濠公園の景色を眺めながら、気軽にお茶と食事を楽しめる店',
+    reason: 'ガラス張りの開放的な空間で、公園の景色とともにゆったり過ごせる',
+    caution: '日本茶専門というよりカフェ＆グローサリーなので、本格志向には物足りないかも',
+    source: '日本茶生活の紹介記事',
+    confidence: 'medium'
+  },
+  {
+    name: '和紅茶専門店 きごころ',
+    region: 'fukuoka',
+    area: '南区・高宮',
+    area_tier: 2,
+    tea_types: ['wakocha'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:4, staff_interaction:4, quiet:5, casual:2, traditional:3, fashionable:3, sweets:1, tea_leaf_purchase:5, solo_friendly:4 },
+    summary: '国産の和紅茶を試飲しながらじっくり選べる専門店',
+    reason: '九州各地の和紅茶を40種ほど厳選し、スタッフが一杯ずつ丁寧に試飲を出してくれる',
+    caution: '紅茶専門店なので、緑茶や抹茶が目当ての人には別の店が合うかも',
+    source: '食べログまとめ・日本茶生活の紹介記事',
+    confidence: 'high'
+  },
+  {
+    name: '高宮庭園茶寮',
+    region: 'fukuoka',
+    area: '南区・高宮',
+    area_tier: 2,
+    tea_types: ['green','matcha','wakocha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:3, quiet:4, casual:1, traditional:4, fashionable:5, sweets:5, tea_leaf_purchase:2, solo_friendly:2 },
+    summary: '文化財の邸宅を改修した茶寮で楽しむ、特別なアフタヌーンティー',
+    reason: '旧高宮貝島家住宅を改修した庭園付きの茶房で、九州の日本茶・和紅茶と上質な和菓子が味わえる',
+    caution: '気軽な一杯よりは、特別な時間を過ごしたい人向け',
+    source: '日本茶生活の紹介記事',
+    confidence: 'medium'
+  },
+  {
+    name: 'LUPICIA 大丸福岡天神店',
+    region: 'fukuoka',
+    area: '中央区・天神（大丸福岡天神店 地下2階）',
+    area_tier: 1,
+    tea_types: ['blacktea'],
+    alcohol: false,
+    profile: { tea_quality:3, beginner_friendly:5, staff_interaction:2, quiet:1, casual:5, traditional:1, fashionable:4, sweets:2, tea_leaf_purchase:5, solo_friendly:4 },
+    summary: '世界のお茶を100種類以上そろえる、デパート内の紅茶専門店',
+    reason: '定番から季節のフレーバーティーまで幅広く揃い、缶入りでギフトにもしやすい',
+    caution: '座ってゆっくり飲む場所ではなく、購入がメインの店舗',
+    source: 'Pathee の店舗紹介',
+    confidence: 'medium'
+  },
+  {
+    name: '喫茶去 草の庵',
+    region: 'fukuoka',
+    area: '南区・高宮（油山周辺の丘の上）',
+    area_tier: 2,
+    tea_types: ['matcha','wakocha'],
+    alcohol: false,
+    profile: { tea_quality:3, beginner_friendly:5, staff_interaction:4, quiet:5, casual:4, traditional:4, fashionable:2, sweets:2, tea_leaf_purchase:1, solo_friendly:4 },
+    summary: '丘の上の静かな一軒家で、自分で点てる抹茶体験ができるカフェ',
+    reason: '一服目は店主が、二服目は自分で茶筅を持って点てる「薄茶セット」が体験でき、作法を知らなくても気軽に楽しめる',
+    caution: '駅から坂道を上る立地で、公共交通機関はコミュニティバスが便利',
+    source: 'ふくおかナビの紹介記事・公式サイト',
+    confidence: 'medium'
+  },
+  {
+    name: 'Japanese Salon 雫',
+    region: 'fukuoka',
+    area: '中央区・大名（赤坂）',
+    area_tier: 1,
+    tea_types: ['cocktail','matcha','green','hojicha'],
+    alcohol: true,
+    profile: { tea_quality:4, beginner_friendly:2, staff_interaction:4, quiet:4, casual:2, traditional:3, fashionable:5, sweets:1, tea_leaf_purchase:1, solo_friendly:4 },
+    summary: '玉露や抹茶を使ったオリジナルカクテル「茶酒」を提供する隠れ家バー',
+    reason: 'GI認定の八女伝統本玉露や抹茶をスピリッツと掛け合わせた「茶酒」を、ミクソロジー技法で提供',
+    caution: 'お酒が前提の店なので、お酒を飲まない人やお子様連れには不向き',
+    source: 'UMAGA・食べログの店舗紹介',
+    confidence: 'medium'
+  },
+  {
+    name: 'くろき屋',
+    region: 'fukuoka',
+    area: '西区・今宿',
+    area_tier: 2,
+    tea_types: ['green'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:4, staff_interaction:4, quiet:4, casual:3, traditional:3, fashionable:2, sweets:2, tea_leaf_purchase:4, solo_friendly:3 },
+    summary: '住宅街にひっそりたたずむ、九州産一番茶にこだわる日本茶専門カフェ',
+    reason: '九州産の一番茶のみを使い、店主が日本茶の美味しさを伝えたいという思いで営む小さな専門店',
+    caution: '席数が3席のみと小さく、混雑時は入れないことも',
+    source: 'フクリパの紹介記事',
+    confidence: 'medium'
+  },
+  {
+    name: '茶房 星水庵',
+    region: 'yame',
+    area: '八女市・星野村',
+    area_tier: 3,
+    tea_types: ['green','matcha','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:4, staff_interaction:3, quiet:5, casual:3, traditional:4, fashionable:2, sweets:4, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '八女茶の産地・星野村で、川のほとりの茶房として86年続く老舗',
+    reason: '販売・喫茶・試飲の3つの空間があり、星野村の自然の中で本場の八女茶をじっくり味わえる',
+    caution: '福岡市中心部から車で1時間ほどかかるので、日帰り観光を兼ねて訪れるのがおすすめ',
+    source: '公式サイト・くふうトリップの紹介記事',
+    confidence: 'high'
+  },
+  {
+    name: '茶の文化館（星野茶寮）',
+    region: 'yame',
+    area: '八女市・星野村',
+    area_tier: 3,
+    tea_types: ['green','matcha'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:5, staff_interaction:5, quiet:4, casual:2, traditional:5, fashionable:2, sweets:3, tea_leaf_purchase:3, solo_friendly:2 },
+    summary: '手もみ茶体験や玉露点前など、お茶を学べる体験型の観光施設',
+    reason: '手もみ緑茶づくりや闘茶会、玉露のお点前体験など、お茶について実際に体験しながら学べる',
+    caution: '体験は要予約・複数名向けのものが多く、ふらっと一人で立ち寄るには不向き',
+    source: '星野村観光ナビの公式紹介',
+    confidence: 'high'
+  },
+  {
+    name: 'お茶の山口園',
+    region: 'itoshima',
+    area: '糸島市・前原東',
+    tea_types: ['green'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:4, quiet:4, casual:2, traditional:5, fashionable:1, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '星野村の玉露農家発祥、糸島で75年続く茶舗。茶道教室も開いている',
+    reason: '星野村の玉露農家をルーツに持ち、茶葉の量り売りから茶道教室まで幅広く展開している',
+    caution: '喫茶スペースはなく、購入・体験がメインの店',
+    source: '公式サイト',
+    confidence: 'high'
+  },
+  {
+    name: '岩木園茶舗',
+    region: 'fukuoka',
+    area: '福岡市西区・周船寺（糸島市の隣）',
+    tea_types: ['green'],
+    alcohol: false,
+    profile: { tea_quality:3, beginner_friendly:4, staff_interaction:5, quiet:3, casual:3, traditional:3, fashionable:1, sweets:1, tea_leaf_purchase:5, solo_friendly:4 },
+    summary: '地域で長く愛される、お母さんの笑顔が魅力の街の茶舗',
+    reason: '常連さんとの会話も楽しめる、地域密着型の小さなお茶屋さん',
+    caution: '観光向けというより地元密着型の店なので、華やかさは控えめ',
+    source: '周船寺ネットの紹介記事',
+    confidence: 'medium'
+  },
+  {
+    name: 'お茶の栗原園',
+    region: 'fukuoka',
+    area: '中央区・警固',
+    tea_types: ['green','matcha','hojicha','wakocha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:4, staff_interaction:5, quiet:3, casual:3, traditional:4, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:4 },
+    summary: '創業67年、警固本通りに佇む地域密着の老舗茶舗',
+    reason: '警固エリアで数少なくなった昔ながらのお茶屋さんで、コーヒーも扱う懐の深さが魅力',
+    caution: '喫茶スペースはなく、購入がメインの店舗',
+    source: '日本茶マップ・TNCの紹介記事',
+    confidence: 'high'
+  },
+  {
+    name: '牛島製茶 六本松店',
+    region: 'fukuoka',
+    area: '中央区・六本松',
+    tea_types: ['green','matcha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:5, staff_interaction:3, quiet:2, casual:4, traditional:3, fashionable:3, sweets:4, tea_leaf_purchase:5, solo_friendly:4 },
+    summary: '大正10年創業、八女の老舗が福岡市内に構える茶葉専門店',
+    reason: '八女茶の深蒸し茶や玉露をソフトクリームと一緒に気軽に楽しめる、市内で買える八女茶の入り口',
+    caution: '座席は少なく、じっくり長居するタイプの店ではない',
+    source: '食べログ・六本松421の紹介',
+    confidence: 'high'
+  },
+  {
+    name: '鳥飼茶房',
+    region: 'fukuoka',
+    area: '城南区・鳥飼',
+    tea_types: ['green'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:4, staff_interaction:3, quiet:5, casual:3, traditional:3, fashionable:5, sweets:3, tea_leaf_purchase:3, solo_friendly:5 },
+    summary: '2026年オープン、朝から静かな時間を過ごせる新しい日本茶専門カフェ',
+    reason: 'コンクリート打ちっぱなしのおしゃれな空間で、一人でも読書をしながらゆったり過ごせる',
+    caution: '駅から少し歩く住宅街にあるので、アクセスは事前に確認を。開店から日が浅く情報も少なめ',
+    source: '紹介記事',
+    confidence: 'medium'
+  },
+  {
+    name: '星野製茶園',
+    region: 'yame',
+    area: '八女市・星野村',
+    tea_types: ['green','matcha'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:4, staff_interaction:4, quiet:4, casual:3, traditional:4, fashionable:2, sweets:3, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: 'GI認定玉露の産地・星野村を代表する製茶園。訪問すればお茶と茶菓子のおもてなしも',
+    reason: '来店するとお茶とお茶菓子を無料でふるまってくれ、その場で味を確かめてから購入できる',
+    caution: '喫茶スペースというより販売中心の店舗',
+    source: '食べログ・公式サイト',
+    confidence: 'high'
+  },
+  {
+    name: 'お茶村',
+    region: 'yame',
+    area: '八女市',
+    tea_types: ['green','matcha','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:3, beginner_friendly:4, staff_interaction:3, quiet:3, casual:3, traditional:3, fashionable:2, sweets:3, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '八女の丘の上に立つ、健康茶と日本茶を扱う工場直営店＆カフェ',
+    reason: '併設の工場からお茶の香りが漂う丘の上の店舗で、2階のカフェでひと休みもできる',
+    caution: '桑抹茶など健康茶がメインで、日本茶専門店ほどの品揃えではない',
+    source: '公式サイト',
+    confidence: 'medium'
+  },
+  {
+    name: '高木茶園',
+    region: 'yame',
+    area: '八女市・星野村',
+    tea_types: ['green'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:2, staff_interaction:3, quiet:5, casual:2, traditional:4, fashionable:1, sweets:1, tea_leaf_purchase:5, solo_friendly:2 },
+    summary: '星野村の茶農家が単一品種ごとに仕立てる、通向けの茶葉専門店',
+    reason: '減農薬・EU基準クリアの茶葉を、ブレンドせず単一品種ごとに販売するこだわりの茶園',
+    caution: '観光客向けというより茶葉の品質重視の店で、初心者にはやや専門的',
+    source: '公式サイト・八女市商工会',
+    confidence: 'medium'
+  },
+  {
+    name: '茶家 六地蔵',
+    region: 'saga',
+    area: '佐賀県嬉野市（嬉野温泉）',
+    tea_types: ['green','matcha','hojicha','wakocha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:5, staff_interaction:3, quiet:3, casual:5, traditional:3, fashionable:4, sweets:5, tea_leaf_purchase:3, solo_friendly:3 },
+    summary: '老舗茶舗が手がける、嬉野茶のジェラートが人気の温泉街カフェ',
+    reason: '自社茶園の嬉野茶を使った抹茶・煎茶・ほうじ茶・紅茶のジェラートが日替わりで楽しめる',
+    caution: '福岡市内からは車で1時間半ほどかかるので、嬉野温泉観光と合わせて訪れるのがおすすめ',
+    source: 'なっぷの紹介記事',
+    confidence: 'medium'
+  },
+  {
+    name: '和紅茶専門店 紅葉～くれは～',
+    region: 'saga',
+    area: '佐賀県佐賀市・柳町',
+    tea_types: ['wakocha'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:4, staff_interaction:4, quiet:4, casual:2, traditional:3, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:4 },
+    summary: '20年以上、国産紅茶を専門に扱う佐賀市の和紅茶専門店',
+    reason: '店長自ら生産者を訪ねて選んだ和紅茶を扱い、喫茶スペースでも楽しめる',
+    caution: '紅茶専門店なので、緑茶や抹茶が目当てなら他の店がおすすめ',
+    source: '公式サイト',
+    confidence: 'high'
+  },
+  {
+    name: 'びんつけや茶舗',
+    region: 'saga',
+    area: '佐賀県唐津市',
+    tea_types: ['green','matcha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:5, staff_interaction:5, quiet:3, casual:3, traditional:5, fashionable:2, sweets:1, tea_leaf_purchase:4, solo_friendly:3 },
+    summary: '創業1617年、唐津茶と抹茶の淹れ方・点て方を教えてくれる老舗茶舗',
+    reason: '日本茶の淹れ方体験や抹茶の点て方体験ができ、お茶について学びたい人にぴったり',
+    caution: '体験には予約が必要な場合があるので、事前に唐津観光協会などで確認を',
+    source: '唐津観光協会の紹介',
+    confidence: 'medium'
+  },
+  {
+    name: '茶料 山科',
+    region: 'fukuoka',
+    area: '中央区・赤坂',
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:4, staff_interaction:5, quiet:4, casual:2, traditional:4, fashionable:4, sweets:4, tea_leaf_purchase:4, solo_friendly:4 },
+    summary: '日本茶鑑定士が営む製茶問屋「山科茶舗」直営の、本格日本茶と和スイーツの店',
+    reason: '祖父の代から続く製茶問屋の茶葉を、日本茶鑑定士の店主が厳選して茶と和スイーツで味わわせてくれる',
+    caution: '甘味の予算はやや高め（数千円程度）なので、気軽な一杯よりゆっくり楽しみたい人向け',
+    source: 'Fukuoka Now・にしてつニュースの紹介記事',
+    confidence: 'high'
+  },
+  {
+    name: '辻利茶舗 京町本店',
+    region: 'kitakyushu',
+    area: '北九州市小倉北区・京町',
+    tea_types: ['green','matcha','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:5, staff_interaction:4, quiet:2, casual:4, traditional:3, fashionable:3, sweets:4, tea_leaf_purchase:5, solo_friendly:4 },
+    summary: '1860年創業の宇治茶の老舗が構える、北九州市民に親しまれる茶舗＆カフェ',
+    reason: '九州各地の厳選茶葉を試飲しながら選べ、奥の喫茶スペースで抹茶ドリンクやスイーツも楽しめる',
+    caution: '商店街の中にあり、静かに一人でというよりは賑やかな雰囲気',
+    source: 'STARFLYERの紹介記事・公式サイト',
+    confidence: 'high'
+  },
+  {
+    name: '矢部屋許斐本家（このみ園）',
+    region: 'yame',
+    area: '八女市・本町（八女福島）',
+    tea_types: ['green','matcha'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:3, staff_interaction:3, quiet:4, casual:2, traditional:5, fashionable:3, sweets:2, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '「八女茶」の名付け親、江戸時代創業の九州最古の茶問屋',
+    reason: '八女市指定有形文化財の町家建築で、300年以上続く老舗が誇る伝統本玉露や焙炉式八女茶が手に入る',
+    caution: '喫茶スペースはなく、購入がメインの老舗茶問屋',
+    source: '公式サイト・食べログの紹介',
+    confidence: 'high'
+  },
+  {
+    name: '茶の葉堂',
+    region: 'yame',
+    area: '八女郡広川町',
+    tea_types: ['green','matcha','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:5, staff_interaction:3, quiet:3, casual:5, traditional:3, fashionable:2, sweets:4, tea_leaf_purchase:4, solo_friendly:3 },
+    summary: '奥八女茶の畑を望む赤い床几台で、ソフトクリームや冷茶が楽しめる茶屋',
+    reason: '抹茶・ほうじ茶ソフトクリームや夏限定の冷茶など、気軽に奥八女茶を味わえる',
+    caution: '郊外で駐車場は広いが、公共交通機関でのアクセスはやや不便',
+    source: '食べログまとめ・公式サイト',
+    confidence: 'medium'
+  },
+  {
+    name: 'お茶の光玉園',
+    region: 'yame',
+    area: '八女市・井延',
+    tea_types: ['green','matcha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:4, staff_interaction:3, quiet:3, casual:3, traditional:3, fashionable:2, sweets:4, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '明治4年創業、八女茶の製造販売と茶スイーツを手掛ける老舗',
+    reason: '八女茶を使ったロールケーキやどら焼きなど、スイーツも充実した昔ながらの茶問屋',
+    caution: '本店は郊外だが、天神・岩田屋本店にも売店があり市内でも購入できる',
+    source: '食べログ・公式サイト',
+    confidence: 'medium'
+  },
+  {
+    name: 'うれしの茶交流館 チャオシル',
+    region: 'saga',
+    area: '佐賀県嬉野市（お茶の資料館・体験施設）',
+    tea_types: ['green','wakocha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:5, staff_interaction:5, quiet:3, casual:4, traditional:4, fashionable:2, sweets:3, tea_leaf_purchase:3, solo_friendly:4 },
+    summary: 'うれしの茶の歴史を学び、淹れ方教室や試飲も楽しめる公営の茶交流施設',
+    reason: '入館無料で展示を見学でき、お茶の淹れ方教室や釜炒り茶体験など学びながら楽しめる',
+    caution: '喫茶は蒸し製玉緑茶・釜炒り茶・紅茶の3種とシンプル',
+    source: '嬉野市公式・るるぶの紹介記事',
+    confidence: 'high'
+  },
+  {
+    name: '224 shop+saryo',
+    region: 'saga',
+    area: '佐賀県嬉野市（嬉野温泉街）',
+    tea_types: ['green','wakocha'],
+    alcohol: false,
+    profile: { tea_quality:3, beginner_friendly:4, staff_interaction:3, quiet:3, casual:3, traditional:2, fashionable:5, sweets:4, tea_leaf_purchase:3, solo_friendly:3 },
+    summary: '肥前吉田焼のブランドショップが併設する、おしゃれな嬉野茶カフェ',
+    reason: '自社ブランドの器で嬉野茶やアレンジティーが楽しめ、器選びも一緒に楽しめる',
+    caution: '1階カフェは週末（金・土・日）のみの営業なので訪問日に注意',
+    source: 'たびらい・LINEトラベルjpの紹介記事',
+    confidence: 'high'
+  }
+];
+
+const LOADING_MESSAGES = [
+  '希望を整理しています…',
+  'お店の情報と照らし合わせています…',
+  '相性を計算しています…'
+];
+
+const WEIGHT_BASE = {
+  tea_quality:0.3, beginner_friendly:0.3, staff_interaction:0.3, quiet:0.3,
+  casual:0.3, traditional:0.3, fashionable:0.3, sweets:0.3, tea_leaf_purchase:0.3, solo_friendly:0.3
+};
+const DIM_LABEL = {
+  tea_quality:'本格的な日本茶', beginner_friendly:'初心者でも楽しめる', staff_interaction:'店員との会話',
+  quiet:'静かな雰囲気', casual:'気軽さ', traditional:'伝統的な雰囲気', fashionable:'おしゃれさ',
+  sweets:'スイーツ', tea_leaf_purchase:'茶葉の購入', solo_friendly:'一人でも入りやすい'
+};
+
+const TEA_TYPE_MAP = {
+  '緑茶（煎茶・玉露など）': ['green'],
+  '抹茶': ['matcha'],
+  'ほうじ茶': ['hojicha'],
+  '紅茶（和紅茶・洋紅茶）': ['wakocha','blacktea'],
+  'お茶を使ったカクテル・お酒': ['cocktail']
+};
+const REGION_MAP = {
+  '福岡市内（天神・博多など中心部〜市内各所）': 'fukuoka',
+  '糸島市': 'itoshima',
+  '八女市・星野村（お茶の産地）': 'yame',
+  '北九州市': 'kitakyushu',
+  '佐賀県（佐賀市・嬉野市・唐津市）': 'saga'
+};
+
+function selectedTypeCodes(){
+  let codes = [];
+  state.teaTypes.forEach(t => { if(TEA_TYPE_MAP[t]) codes = codes.concat(TEA_TYPE_MAP[t]); });
+  return codes;
+}
+function wantsAlcohol(){ return state.teaTypes.includes('お茶を使ったカクテル・お酒'); }
+function allowedRegions(){
+  if(state.regions.length === 0 || state.regions.includes('特にこだわらない（全エリアから探す）')) return null;
+  const codes = state.regions.map(r => REGION_MAP[r]).filter(Boolean);
+  return codes.length ? codes : null;
+}
+
+function addW(w, add){ for(const k in add){ w[k]=(w[k]||0)+add[k]; } }
+
+function computeWeights(){
+  const w = Object.assign({}, WEIGHT_BASE);
+  const purposeMap = {
+    '日本茶をしっかり楽しみたい': {tea_quality:1.2, traditional:0.6},
+    '気軽にお茶を飲みたい': {casual:1.2},
+    '茶葉を買いたい': {tea_leaf_purchase:1.8},
+    '抹茶・スイーツを楽しみたい': {sweets:1.3},
+    '茶器を見たい': {traditional:0.8},
+    'お茶について教えてほしい': {staff_interaction:1.0, beginner_friendly:0.8}
+  };
+  state.purpose.forEach(p => addW(w, purposeMap[p] || {}));
+
+  const atmoMap = {
+    '静か': {quiet:1.2},
+    'おしゃれ': {fashionable:1.2},
+    'カジュアル': {casual:1.0},
+    '本格的': {traditional:1.2, tea_quality:0.6},
+    '店員さんと話したい': {staff_interaction:1.2}
+  };
+  state.atmosphere.forEach(a => addW(w, atmoMap[a] || {}));
+
+  const sceneMap = {
+    '一人でゆっくり': {solo_friendly:1.4, quiet:0.4},
+    '友人とおしゃべりしながら': {casual:0.6, sweets:0.3},
+    'デートや特別な日に': {fashionable:0.8, traditional:0.4, sweets:0.4},
+    '観光のついでに気軽に': {casual:0.4, fashionable:0.4}
+  };
+  addW(w, sceneMap[state.scene] || {});
+
+  const expMap = {
+    '初心者': {beginner_friendly:1.6},
+    '少し詳しい': {beginner_friendly:0.7},
+    'かなり好き': {tea_quality:0.6, traditional:0.4},
+    'お茶関係者・専門家': {tea_quality:1.0, traditional:0.8, beginner_friendly:-0.2}
+  };
+  addW(w, expMap[state.experience] || {});
+
+  const interMap = {
+    '積極的に話したい': {staff_interaction:1.2},
+    'すこし話せたら嬉しい': {staff_interaction:0.5},
+    'あまり話しかけられたくない': {staff_interaction:-0.4, quiet:0.4}
+  };
+  addW(w, interMap[state.interaction] || {});
+
+  for(const k in w){ if(w[k]<0) w[k]=0; }
+  return w;
+}
+
+function baseScore(shop, weights){
+  const p = shop.profile || {};
+  let num=0, den=0;
+  for(const k in weights){
+    const wv = weights[k];
+    const pv = typeof p[k]==='number' ? p[k] : 0;
+    num += wv*pv;
+    den += wv*5;
+  }
+  let pct = den>0 ? (num/den)*100 : 0;
+  const confBonus = { high:0, medium:-3, low:-8 };
+  pct += (confBonus[shop.confidence] ?? -8);
+  return pct;
+}
+
+function typeBonus(shop, typeCodes){
+  if(typeCodes.length===0) return 0;
+  const overlap = (shop.tea_types||[]).filter(t => typeCodes.includes(t));
+  if(overlap.length===0) return -10;
+  return Math.min(12, overlap.length*6);
+}
+
+function purchaseBonus(shop){
+  if(!state.purpose.includes('茶葉を買いたい')) return 0;
+  const v = (shop.profile && shop.profile.tea_leaf_purchase) || 0;
+  if(v >= 4) return 10;
+  if(v <= 2) return -12;
+  return 0;
+}
+
+function scoreShop(shop, weights, typeCodes){
+  const pct = baseScore(shop, weights) + typeBonus(shop, typeCodes || []) + purchaseBonus(shop);
+  return Math.max(5, Math.min(99, Math.round(pct)));
+}
+
+function topDims(weights, n){
+  return Object.entries(weights).sort((a,b)=>b[1]-a[1]).slice(0,n).map(([k])=>k);
+}
+
+function stars(v){
+  const full = Math.round(v);
+  return '★'.repeat(full) + '☆'.repeat(5-full);
+}
+
+const CONF_ICON = { high:'🟢', medium:'🟡', low:'🔴' };
+const CONF_LABEL = { high:'公式情報や複数の記事で確認できる内容です', medium:'限られた記事情報から評価しています', low:'情報が少なく評価の精度は低めです' };
+
+function renderLoading(){
+  let i = 0;
+  app.innerHTML = `<div class="loading"><div class="leaf"></div><p id="loadmsg">${LOADING_MESSAGES[0]}</p></div>`;
+  return setInterval(()=>{
+    i = (i+1) % LOADING_MESSAGES.length;
+    const el = document.getElementById('loadmsg');
+    if(el) el.textContent = LOADING_MESSAGES[i];
+  }, 550);
+}
+
+function submit(){
+  const timer = renderLoading();
+  document.getElementById('footnote').style.display='none';
+  setTimeout(()=>{
+    clearInterval(timer);
+    try{
+      const regionFilter = allowedRegions();
+      const allowAlcohol = wantsAlcohol();
+      let candidates = regionFilter ? SHOPS.filter(s => regionFilter.includes(s.region)) : SHOPS.slice();
+      if(!allowAlcohol) candidates = candidates.filter(s => !s.alcohol);
+      if(candidates.length === 0) candidates = (regionFilter ? SHOPS.filter(s => regionFilter.includes(s.region)) : SHOPS).filter(s => !s.alcohol || allowAlcohol);
+      if(candidates.length === 0) candidates = SHOPS.filter(s => !s.alcohol);
+
+      const weights = computeWeights();
+      const typeCodes = selectedTypeCodes();
+      const scored = candidates.map(s => Object.assign({}, s, { _score: scoreShop(s, weights, typeCodes) }));
+      scored.sort((a,b)=>b._score-a._score);
+      renderResults(scored.slice(0,3), weights);
+    }catch(err){
+      renderError('結果の計算中にエラーが発生しました。もう一度お試しください。');
+      console.error(err);
+    }
+  }, 1500);
+}
+
+function renderError(msg){
+  app.innerHTML = `
+    <div class="error-box">${msg}</div>
+    <button class="primary" onclick="submit()">もう一度探す</button>
+    <button class="ghost" onclick="restart()" style="margin-left:.6rem;">最初からやり直す</button>
+  `;
+}
+
+const RANK = ['一','二','三'];
+
+function renderResults(shops, weights){
+  const dims = topDims(weights, 5);
+  document.getElementById('footnote').style.display='block';
+
+  const cards = shops.map((s, idx) => {
+    const p = s.profile || {};
+    const rows = dims.map(d => `<tr><td>${DIM_LABEL[d]}</td><td>${stars(p[d] ?? 0)}</td></tr>`).join('');
+    return `
+      <div class="shop-card">
+        <div class="shop-top">
+          <div class="rank">${RANK[idx] || (idx+1)}</div>
+          <div>
+            <h3 class="shop-name">${escapeHtml(s.name || '店名不明')}</h3>
+            <div class="shop-area">${escapeHtml(s.area || '福岡市')}</div>
+          </div>
+          <div class="match">
+            <div class="match-pct">${s._score}%</div>
+            <div class="match-label">マッチ度</div>
+          </div>
+        </div>
+        <div class="summary-line">${escapeHtml(s.summary || '')}</div>
+        <table class="match-table">${rows}</table>
+        ${s.reason ? `<div class="why"><b>おすすめ理由　</b>${escapeHtml(s.reason)}</div>` : ''}
+        ${s.caution ? `<div class="caution">${escapeHtml(s.caution)}</div>` : ''}
+        <div class="evidence-row">
+          <span class="badge">${CONF_ICON[s.confidence] || '🔴'}</span>
+          <span>${s.source ? escapeHtml(s.source) + '｜' : ''}${CONF_LABEL[s.confidence] || CONF_LABEL.low}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  app.innerHTML = `
+    <div class="results-head">
+      <h2>あなたにおすすめの日本茶店</h2>
+      <p>ウェブ上の公開情報をAIが調べ、あなたの希望との相性を計算しました。</p>
+    </div>
+    ${cards}
+    <button class="ghost again" onclick="restart()">条件を変えてもう一度探す</button>
+  `;
+}
+
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function restart(){
+  state.step=0; state.regions=[]; state.purpose=[]; state.teaTypes=[]; state.atmosphere=[]; state.scene=''; state.experience=''; state.interaction=''; state.freeText='';
+  document.getElementById('footnote').style.display='none';
+  renderStep();
+}
+
+renderStep();
+</script>
+</body>
+</html>
