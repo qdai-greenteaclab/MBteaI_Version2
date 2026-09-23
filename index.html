@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MBteaI ― あなたに合う福岡の日本茶店</title>
+<title>MBteaI ― あなたに合う日本茶店</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
@@ -370,32 +370,6 @@
     padding-top:1rem;
   }
 
-  .gate{
-    min-height:70vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:2rem 1rem;
-  }
-  .gate h2{margin-bottom:.4rem;}
-  .gate p{color:var(--ink-soft); font-size:.9rem; margin-bottom:1.6rem;}
-  .gate input[type="password"]{
-    font-family:inherit;
-    font-size:1rem;
-    padding:.7rem .9rem;
-    border:1px solid var(--line);
-    border-radius:3px;
-    background:transparent;
-    color:var(--ink);
-    text-align:center;
-    width:100%;
-    max-width:220px;
-    margin-bottom:1rem;
-  }
-  .gate .err{color:var(--danger); font-size:.85rem; min-height:1.2em; margin-bottom:.6rem;}
-
   @media (max-width:480px){
     .q-sub{margin-left:0;}
     .shop-top{flex-wrap:wrap;}
@@ -413,48 +387,17 @@
       <path d="M14 66 C 8 50, 22 46, 16 30 C 10 14, 22 10, 18 2"/>
       <path d="M30 66 C 24 52, 36 48, 30 34 C 24 20, 34 16, 30 4"/>
     </svg>
-    <h1>あなたに合う、<br>福岡の日本茶店を探す。</h1>
+    <h1>あなたに合う、<br>日本茶店を探す。</h1>
     <p>8つの質問に答えると、市内の専門店から近郊の産地・お茶バーまで含めて調べた実在するお店の情報をもとに、相性のよい3軒をお伝えします。</p>
   </div>
 
-  <div id="gate" class="gate">
-    <h2>🍵 合言葉を入力してください</h2>
-    <p>サークルメンバー限定で共有しているページです。<br>合言葉はグループ内でお知らせしています。</p>
-    <input type="password" id="gate-input" placeholder="合言葉" autocomplete="off">
-    <div class="err" id="gate-err"></div>
-    <button class="primary" onclick="checkGate()">開く</button>
-  </div>
-
-  <div id="app" style="display:none;"></div>
+  <div id="app"></div>
 
   <div class="free-note" id="footnote" style="display:none;">
     店舗情報は、公式サイトや公開されている紹介記事をもとにまとめたものです（アプリ作成時点の情報）。最新の営業状況やメニューは、訪問前に各店舗の公式情報でご確認ください。
   </div>
 </div>
 
-<script>
-const GATE_PASSCODE = 'MBteaI2026'; // ここを好きな合言葉に変更してください
-
-function checkGate(){
-  const val = document.getElementById('gate-input').value;
-  if(val === GATE_PASSCODE){
-    try{ sessionStorage.setItem('mbteai_unlocked', '1'); }catch(e){}
-    document.getElementById('gate').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-  } else {
-    document.getElementById('gate-err').textContent = '合言葉が違います';
-  }
-}
-document.getElementById('gate-input').addEventListener('keydown', e => {
-  if(e.key === 'Enter') checkGate();
-});
-try{
-  if(sessionStorage.getItem('mbteai_unlocked') === '1'){
-    document.getElementById('gate').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-  }
-}catch(e){}
-</script>
 <script>
 const QUESTIONS = [
   {
@@ -465,8 +408,9 @@ const QUESTIONS = [
     options: [
       '福岡市内（天神・博多など中心部〜市内各所）',
       '糸島市',
-      '八女市・星野村（お茶の産地）',
+      '八女市・星野村・久留米市・朝倉市（お茶の産地）',
       '北九州市',
+      '飯塚市・直方市（筑豊エリア）',
       '佐賀県（佐賀市・嬉野市・唐津市）',
       '特にこだわらない（全エリアから探す）'
     ]
@@ -1037,7 +981,592 @@ const SHOPS = [
     caution: '1階カフェは週末（金・土・日）のみの営業なので訪問日に注意',
     source: 'たびらい・LINEトラベルjpの紹介記事',
     confidence: 'high'
-  }
+  },
+  {
+    name: '辻利茶舗 魚町店',
+    region: 'kitakyushu',
+    area: '小倉北区・魚町（旦過市場近く）',
+    tea_types: ['green','matcha','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:4, staff_interaction:3, quiet:2, casual:4, traditional:4, fashionable:2, sweets:4, tea_leaf_purchase:4, solo_friendly:4 },
+    summary: '万延元年創業、宇治茶の老舗「辻利」の小倉本流の一軒',
+    reason: '創業160年以上の歴史を持つ辻利茶舗の直営店で、茶葉購入と喫茶の両方に対応',
+    caution: '観光客も多く訪れる立地のため、ゆっくり静かに過ごしたい日は時間帯を選ぶとよい',
+    source: '食べログ・Yahoo!マップの店舗情報',
+    confidence: 'medium'
+  },
+  {
+    name: '辻利茶舗 小倉城店',
+    region: 'kitakyushu',
+    area: '小倉北区・小倉城下（しろテラス）',
+    tea_types: ['matcha','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:5, staff_interaction:2, quiet:2, casual:5, traditional:3, fashionable:4, sweets:5, tea_leaf_purchase:2, solo_friendly:4 },
+    summary: '小倉城のお膝元「しろテラス」にある、抹茶スイーツが楽しめる辻利の一店',
+    reason: 'お城見学のついでに気軽に抹茶パフェやソフトクリームを楽しめる観光向けの立地',
+    caution: '茶葉をじっくり選びたい人よりも、観光の合間に一服したい人向け',
+    source: 'いこう・すもう福岡、食べログの紹介記事',
+    confidence: 'medium'
+  },
+  {
+    name: '茶論 Salon du JAPON MAEDA',
+    region: 'kitakyushu',
+    area: '小倉北区・中島（旧安川邸）',
+    tea_types: ['green','matcha','wakocha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:4, staff_interaction:4, quiet:5, casual:2, traditional:5, fashionable:5, sweets:4, tea_leaf_purchase:3, solo_friendly:4 },
+    summary: '旧安川邸を舞台にした、日本茶と和雑貨のサロン空間',
+    reason: '歴史的建造物である旧安川邸の中でお茶をいただける非日常感が魅力。和雑貨も扱う',
+    caution: '気軽なカフェというより特別な時間を楽しむ場所なので、日常使いには不向きな場合も',
+    source: 'テレビ西日本・ナッセ北九州の紹介記事',
+    confidence: 'medium'
+  },
+  {
+    name: 'お茶の山口屋',
+    region: 'kitakyushu',
+    area: '小倉北区・旦過市場',
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:4, quiet:2, casual:3, traditional:4, fashionable:2, sweets:2, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '「北九州の台所」旦過市場にある老舗茶舗',
+    reason: '市場ならではの活気の中で、量り売りの茶葉をじっくり選べる',
+    caution: '喫茶スペースは限定的なので、その場でゆっくり飲みたい人は要事前確認',
+    source: '旦過市場公式・北九州市茶商工業組合の情報',
+    confidence: 'medium'
+  },
+  {
+    name: '有限会社栗原園',
+    region: 'kitakyushu',
+    area: '若松区・老松',
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:4, quiet:3, casual:3, traditional:4, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '若松区で50年以上続く地域密着の茶舗',
+    reason: '地元で長く親しまれてきた茶葉専門店で、日々のお茶を買い求める常連客が多い',
+    caution: '観光向けの喫茶スペースなどは持たない、購入中心のお店',
+    source: '福岡県茶商工業協同組合 加盟店一覧',
+    confidence: 'low'
+  },
+  {
+    name: '日本茶カフェこの葉（お茶の内藤園）',
+    region: 'iizuka',
+    area: '飯塚市（内藤園 併設カフェ）',
+    tea_types: ['green','matcha','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:4, staff_interaction:4, quiet:4, casual:3, traditional:3, fashionable:3, sweets:4, tea_leaf_purchase:4, solo_friendly:4 },
+    summary: '筑豊エリアの老舗茶舗「内藤園」が営む和カフェ',
+    reason: '茶舗直営ならではの茶葉の質の良さと、和カフェとしての落ち着いた雰囲気を両立',
+    caution: '飯塚市中心部からは少し距離があるため、車での来店が便利',
+    source: '飯塚市観光ポータル・内藤園公式サイト',
+    confidence: 'high'
+  },
+  {
+    name: '西村園茶舗 ゆめタウン飯塚店',
+    region: 'iizuka',
+    area: '飯塚市（ゆめタウン飯塚内）',
+    tea_types: ['green','matcha','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:3, beginner_friendly:5, staff_interaction:3, quiet:1, casual:5, traditional:2, fashionable:3, sweets:5, tea_leaf_purchase:4, solo_friendly:4 },
+    summary: '北部九州で複数店舗を展開する老舗茶舗のショッピングモール店',
+    reason: '買い物のついでに気軽に立ち寄れ、抹茶スイーツと茶葉購入の両方に対応',
+    caution: 'モール内のため落ち着いた静けさよりも賑わいのある雰囲気',
+    source: 'ゆめタウン飯塚公式・筑豊情報マガジンWING',
+    confidence: 'high'
+  },
+  {
+    name: '前田園本店',
+    region: 'iizuka',
+    area: '直方市',
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:3, quiet:3, casual:3, traditional:4, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '直方市に本店を構える地域の茶舗',
+    reason: 'ふるさと納税返礼品にも採用される茶葉を扱っており、品質への信頼が厚い',
+    caution: '喫茶よりも茶葉の購入がメインのお店',
+    source: '直方市ふるさと納税・前田園公式サイト',
+    confidence: 'medium'
+  },
+  {
+    name: '八女美緑園製茶（八女茶カフェぶんぶく）',
+    region: 'yame',
+    area: '八女市豊福',
+    tea_types: ['green','matcha','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:4, staff_interaction:4, quiet:3, casual:3, traditional:4, fashionable:3, sweets:4, tea_leaf_purchase:5, solo_friendly:4 },
+    summary: '農林水産大臣賞受賞歴を持つ製茶園が営む、併設カフェ「ぶんぶく」',
+    reason: '高品質な八女茶を作る製茶園ならではの茶葉と、カフェでのスイーツを両方楽しめる',
+    caution: '茶畑エリアにあるため、公共交通機関でのアクセスはやや不便',
+    source: '八女美緑園製茶公式・クロスロードふくおか',
+    confidence: 'high'
+  },
+  {
+    name: '一芯庵（JAふくおか八女 八女茶直売所）',
+    region: 'yame',
+    area: '八女市',
+    tea_types: ['green','matcha','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:4, staff_interaction:3, quiet:2, casual:4, traditional:3, fashionable:2, sweets:2, tea_leaf_purchase:5, solo_friendly:4 },
+    summary: 'JAふくおか八女が運営する八女茶の直売所',
+    reason: '地元農家が育てた八女茶を幅広い価格帯から選べ、贈答用にも使いやすい',
+    caution: '喫茶スペースというより購入がメインの直売所',
+    source: 'JAふくおか八女 公式サイト',
+    confidence: 'high'
+  },
+  {
+    name: '八女茶栗原製茶',
+    region: 'yame',
+    area: '八女市',
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:4, quiet:3, casual:3, traditional:4, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '八女市商工会にも名を連ねる地域の製茶園',
+    reason: '地元で長く茶づくりを続けている生産者で、茶葉の購入に向く',
+    caution: '喫茶や見学対応の有無は事前確認がおすすめ',
+    source: '八女市商工会 会員情報',
+    confidence: 'low'
+  },
+  {
+    name: '鵜ノ池製茶工場',
+    region: 'yame',
+    area: '八女市鵜池',
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:3, quiet:4, casual:2, traditional:5, fashionable:1, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '八女の茶畑地帯に工場を構える製茶所',
+    reason: '生産から製茶までを手がける工場直送タイプで、本格的な茶葉を求める人に向く',
+    caution: '観光客向けの店構えではなく、事前連絡の上での訪問が安心',
+    source: '地域情報サイトの掲載情報',
+    confidence: 'low'
+  },
+  {
+    name: '角田製茶（奥八女茶）',
+    region: 'yame',
+    area: '八女市上陽町',
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:3, staff_interaction:4, quiet:4, casual:2, traditional:5, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '奥八女・上陽町の山あいで茶づくりを行う製茶園',
+    reason: '標高の高い山間部ならではの奥八女茶を、生産者から直接購入できる',
+    caution: '市街地から離れた立地のため、訪問前にアクセス方法の確認がおすすめ',
+    source: '角田製茶公式サイト',
+    confidence: 'high'
+  },
+  {
+    name: '原口園 扶桑庵',
+    region: 'yame',
+    area: '博多駅前（マイング内、八女茶の原口園）',
+    tea_types: ['green','matcha','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:4, staff_interaction:3, quiet:2, casual:4, traditional:3, fashionable:3, sweets:4, tea_leaf_purchase:5, solo_friendly:4 },
+    summary: '八女茶の原口園が博多駅構内で展開するティースタンド',
+    reason: '新幹線利用のついでに八女茶のドリンクやお土産を購入でき、アクセスが良い',
+    caution: '駅構内のため落ち着いた滞在よりもテイクアウト利用が中心',
+    source: 'マイング公式・食べログの店舗情報',
+    confidence: 'high'
+  },
+  {
+    name: '西福製茶',
+    region: 'yame',
+    area: '博多区・博多駅前',
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:3, quiet:3, casual:3, traditional:4, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '結納茶なども手がける老舗の茶葉専門店',
+    reason: '贈答用の結納茶から普段使いの八女茶まで幅広く扱う専門店',
+    caution: '喫茶スペースは持たない、購入中心のお店',
+    source: '西福製茶公式サイト',
+    confidence: 'medium'
+  },
+  {
+    name: '牛島製茶 八女本店',
+    region: 'yame',
+    area: '八女市本町',
+    tea_types: ['green','matcha','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:3, staff_interaction:4, quiet:4, casual:2, traditional:5, fashionable:2, sweets:2, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '創業105年、八女茶・日本茶の製造販売を手がける老舗の本店',
+    reason: '六本松店の本家にあたり、八女の地で長年培われた本格的な茶葉を購入できる',
+    caution: '気軽なカフェ利用よりも、専門店として茶葉を選びたい人向け',
+    source: '牛島製茶公式サイト',
+    confidence: 'high'
+  },
+  {
+    name: 'Green Monster（八女中央大茶園カフェ）',
+    region: 'yame',
+    area: '八女市大籠（八女中央大茶園）',
+    tea_types: ['green','matcha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:5, staff_interaction:3, quiet:3, casual:5, traditional:2, fashionable:5, sweets:5, tea_leaf_purchase:2, solo_friendly:4 },
+    summary: '一面の茶畑を見渡せる絶景ロケーションの新しい抹茶カフェ',
+    reason: '八女中央大茶園のパノラマを眺めながら抹茶ラテなどを楽しめる、写真映えする立地',
+    caution: '茶葉をじっくり選ぶというより、景色とドリンクを楽しむタイプのお店',
+    source: 'KBC・テレビ西日本の紹介記事',
+    confidence: 'high'
+  },
+  {
+    name: '茶匠むろぞの',
+    region: 'yame',
+    area: '八女市',
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:4, quiet:4, casual:2, traditional:5, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '深蒸し八女茶を扱う地元の茶匠',
+    reason: '深蒸し製法にこだわった茶葉を通販・直売で提供している専門店',
+    caution: '店舗での喫茶利用については事前の確認が安心',
+    source: '茶匠むろぞの公式サイト',
+    confidence: 'medium'
+  },
+  {
+    name: '自園栽培奥八女茶 茶の蔵',
+    region: 'yame',
+    area: '八女市（奥八女）',
+    tea_types: ['green','matcha','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:3, staff_interaction:4, quiet:4, casual:2, traditional:5, fashionable:2, sweets:2, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '自園栽培にこだわる奥八女茶の生産者直売所',
+    reason: '栽培から販売まで一貫して手がけており、ふるさと納税返礼品にも採用される品質',
+    caution: '山間部にあるため車での訪問が基本',
+    source: 'ふるさとチョイス・茶の蔵公式サイト',
+    confidence: 'high'
+  },
+  {
+    name: '製茶所山科（山科茶舗 本店）',
+    region: 'yame',
+    area: '朝倉市',
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:4, quiet:4, casual:2, traditional:5, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '福岡市の人気カフェ「茶料 山科」の母体となる、朝倉市の製茶所本店',
+    reason: 'カフェ「茶料 山科」で提供される茶葉の生産元。九州緑茶を製造直売する本店',
+    caution: 'カフェ利用よりも茶葉の購入・通販が中心の拠点',
+    source: '製茶所山科公式サイト',
+    confidence: 'medium'
+  },
+  {
+    name: '中山吉祥園（茶良-sara-）',
+    region: 'yame',
+    area: '八女市黒木町',
+    tea_types: ['green','matcha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:4, staff_interaction:3, quiet:3, casual:3, traditional:3, fashionable:3, sweets:3, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: 'ハラール認証を取得した八女茶を扱う奥八女の茶園',
+    reason: '宗教上の理由でお茶を選びにくい人にも安心な、ハラール認証茶葉を取り扱う珍しい茶園',
+    caution: '店内でのカフェ利用よりも茶葉の購入・通販がメイン',
+    source: '茶良-sara- 公式サイト',
+    confidence: 'medium'
+  },
+  {
+    name: '今村園茶舗',
+    region: 'yame',
+    area: '久留米市花畑',
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:4, staff_interaction:4, quiet:3, casual:3, traditional:4, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '久留米市で八女茶を扱う地域の茶舗',
+    reason: '久留米の街なかで、八女茶を中心とした茶葉をじっくり選んで購入できる',
+    caution: '八女市街からは少し離れた久留米市内にある点に留意',
+    source: '今村園茶舗ショップサイト・福岡県茶商工業協同組合',
+    confidence: 'medium'
+  },
+  {
+    name: '筑邦製茶',
+    region: 'yame',
+    area: '久留米市',
+    tea_types: ['green','wakocha','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:3, quiet:3, casual:3, traditional:4, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '久留米・筑後エリアで日本茶や和紅茶、ハーブティーも扱う製茶会社',
+    reason: '緑茶だけでなく和紅茶やハーブティーも扱っており、幅広い好みに対応できる',
+    caution: '喫茶スペースよりも茶葉の購入・通販がメインの会社',
+    source: '筑邦製茶公式サイト',
+    confidence: 'medium'
+  },
+  {
+    name: '木屋本店',
+    region: 'yame',
+    area: '久留米市中央町',
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:3, beginner_friendly:3, staff_interaction:3, quiet:3, casual:3, traditional:4, fashionable:2, sweets:1, tea_leaf_purchase:4, solo_friendly:3 },
+    summary: '久留米市中央町で営む地域の茶舗',
+    reason: '地元で長く営業してきたお茶屋で、日常使いの茶葉を購入できる',
+    caution: '詳しい情報が少ないため、訪問前に営業状況の確認がおすすめ',
+    source: '福岡県茶商工業協同組合 加盟店一覧',
+    confidence: 'low'
+  },
+  {
+    name: '野中茶舗',
+    region: 'fukuoka',
+    area: '中央区・小笹',
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:4, quiet:3, casual:3, traditional:4, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '小笹商店街にある地域密着の茶舗',
+    reason: '商店街の中で長く営業しており、日常使いの茶葉を相談しながら選べる',
+    caution: '喫茶スペースは持たず、購入がメインのお店',
+    source: '小笹商店会・日本茶生活の紹介記事',
+    confidence: 'medium'
+  },
+  {
+    name: '石川香福園',
+    region: 'fukuoka',
+    area: '東区・箱崎',
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:3, quiet:3, casual:3, traditional:4, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '箱崎エリアにある地域の茶舗',
+    reason: '九州大学箱崎キャンパス跡地にほど近い立地で、地元で長く親しまれている',
+    caution: '詳しい店舗情報が少ないため、訪問前の確認が安心',
+    source: '福岡県茶商工業協同組合 加盟店一覧',
+    confidence: 'low'
+  },
+  {
+    name: '銘茶園',
+    region: 'fukuoka',
+    area: '東区・香椎／名島ほか複数店舗',
+    tea_types: ['green','matcha','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:4, staff_interaction:3, quiet:3, casual:4, traditional:3, fashionable:2, sweets:2, tea_leaf_purchase:5, solo_friendly:4 },
+    summary: '茶道具の品揃えも豊富な、香椎・千早・舞松原など複数店舗を持つ茶舗',
+    reason: '日本茶だけでなく茶道具の取り扱いも豊富で、贈り物選びにも相談しやすい',
+    caution: '店舗ごとに規模や取り扱いが異なるため、事前に最寄り店舗を確認するとよい',
+    source: '銘茶園公式サイト',
+    confidence: 'high'
+  },
+  {
+    name: 'ゆい庵＆田頭茶舗 赤坂店',
+    region: 'fukuoka',
+    area: '中央区・赤坂（大名から移転）',
+    tea_types: ['green','matcha','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:4, staff_interaction:3, quiet:3, casual:4, traditional:3, fashionable:3, sweets:4, tea_leaf_purchase:4, solo_friendly:4 },
+    summary: '広島発、九州にも店舗を展開する日本茶専門店の福岡赤坂店',
+    reason: '深蒸し茶や抹茶を中心に、甘味処「ゆい庵」を併設し茶葉とスイーツの両方を楽しめる',
+    caution: '大名エリアから赤坂へ移転しているため、訪問時は最新の店舗所在地を確認すると安心',
+    source: '食べログ・田頭茶舗公式サイト',
+    confidence: 'high'
+  },
+  {
+    name: '銘茶みどり屋',
+    region: 'fukuoka',
+    area: '春日市・春日原北町',
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:3, quiet:3, casual:3, traditional:4, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '福岡市に隣接する春日市で、自社製造・加工を行う茶舗',
+    reason: '自社での製造・加工からオリジナル商品開発まで手がけており、卸売にも対応',
+    caution: '福岡市内ではなく春日市にあるため、天神・博多からは少し距離がある',
+    source: '銘茶みどり屋公式サイト',
+    confidence: 'high'
+  },
+  {
+    name: '殊代 cotoshiro',
+    region: 'fukuoka',
+    area: '中央区・大名',
+    tea_types: ['green','wakocha','cocktail'],
+    alcohol: true,
+    profile: { tea_quality:4, beginner_friendly:2, staff_interaction:4, quiet:4, casual:2, traditional:3, fashionable:5, sweets:3, tea_leaf_purchase:2, solo_friendly:3 },
+    summary: '「茶・食事・酒」をテーマにした大名の隠れ家的な一軒',
+    reason: 'お茶とお酒を組み合わせたユニークなメニューがあり、大人の時間を楽しみたい人に向く',
+    caution: 'お酒も提供する落ち着いた雰囲気の店なので、未成年やカジュアルな一杯を求める人には不向き',
+    source: 'PressWalker・ARNEの紹介記事',
+    confidence: 'high'
+  },
+  {
+    name: '大濠テラス',
+    region: 'fukuoka',
+    area: '中央区・大濠公園',
+    tea_types: ['green','matcha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:5, staff_interaction:3, quiet:3, casual:5, traditional:2, fashionable:5, sweets:4, tea_leaf_purchase:2, solo_friendly:4 },
+    summary: '大濠公園のほとりで八女茶をテーマにした新しいテラス',
+    reason: '公園の景色を眺めながら八女茶ドリンクを楽しめる、開放的でおしゃれな空間',
+    caution: '公園内という立地上、天候によっては利用しづらい日もある',
+    source: 'よかなび・天神サイトの紹介記事',
+    confidence: 'high'
+  },
+  {
+    name: 'お茶の小野園',
+    region: 'fukuoka',
+    area: '東区・香住ヶ丘',
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:4, quiet:3, casual:3, traditional:4, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '八女茶・嬉野茶・知覧茶など全国の銘茶を扱う専門店',
+    reason: '福岡だけでなく全国の産地のお茶を扱っており、飲み比べをしたい人にも向く',
+    caution: '喫茶スペースよりも茶葉の購入・通販が中心のお店',
+    source: 'お茶の小野園公式サイト',
+    confidence: 'medium'
+  },
+  {
+    name: 'SABOE HAKATA',
+    region: 'fukuoka',
+    area: '博多区・博多旧市街',
+    tea_types: ['green','matcha','wakocha'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:3, staff_interaction:4, quiet:5, casual:2, traditional:4, fashionable:5, sweets:4, tea_leaf_purchase:4, solo_friendly:4 },
+    summary: '博多旧市街の趣ある街並みにたたずむ、新しい日本茶専門店',
+    reason: '独自ブレンド茶や季節の和菓子を、静かで洗練された茶房でじっくり味わえる',
+    caution: '落ち着いた大人向けの空間で、にぎやかに過ごしたい日には不向き',
+    source: '博多経済新聞・天神サイトの紹介記事',
+    confidence: 'high'
+  },
+  {
+    name: '堤茶舗',
+    region: 'fukuoka',
+    area: '南区・野間',
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:3, beginner_friendly:3, staff_interaction:3, quiet:3, casual:3, traditional:4, fashionable:2, sweets:1, tea_leaf_purchase:4, solo_friendly:3 },
+    summary: '南区野間で営む地域の茶舗',
+    reason: '地元密着で長く営業しているお茶屋で、日常使いのお茶を相談しながら選べる',
+    caution: '詳しい店舗情報が少ないため、訪問前に営業状況を確認すると安心',
+    source: '福岡県茶商工業協同組合 加盟店一覧',
+    confidence: 'low'
+  },
+  {
+    name: '辻野新商店',
+    region: 'fukuoka',
+    area: '中央区・祖原',
+    tea_types: ['green','hojicha'],
+    alcohol: false,
+    profile: { tea_quality:3, beginner_friendly:3, staff_interaction:3, quiet:3, casual:3, traditional:4, fashionable:2, sweets:1, tea_leaf_purchase:4, solo_friendly:3 },
+    summary: '中央区祖原で営む地域の茶舗',
+    reason: '地元で長く親しまれているお茶屋で、普段使いの茶葉を購入できる',
+    caution: '詳しい店舗情報が少ないため、訪問前に営業状況を確認すると安心',
+    source: '福岡県茶商工業協同組合 加盟店一覧',
+    confidence: 'low'
+  },
+  {
+    name: '池田茶園',
+    region: 'saga',
+    area: '長崎県東彼杵郡東彼杵町三根郷（そのぎ茶）',
+    tea_types: ['green'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:4, quiet:4, casual:2, traditional:4, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: 'そのぎ茶（玉緑茶）の産地・東彼杵町で茶づくりを行う茶園',
+    reason: '長崎県を代表する茶産地のひとつ、そのぎ茶の生産者から直接、玉緑茶を購入できる',
+    caution: '嬉野市街からは少し足を延ばす立地なので、車での訪問がおすすめ',
+    source: 'そのぎ茶公式サイト',
+    confidence: 'medium'
+  },
+  {
+    name: '大山製茶園 お茶呑み処 茶楽',
+    region: 'saga',
+    area: '長崎県東彼杵郡東彼杵町中尾郷（そのぎ茶）',
+    tea_types: ['green'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:4, staff_interaction:4, quiet:4, casual:3, traditional:3, fashionable:2, sweets:3, tea_leaf_purchase:4, solo_friendly:3 },
+    summary: '自社茶園のそのぎ茶を、併設の「茶楽」でその場で味わえる茶園',
+    reason: '茶畑を眺めながらお茶をいただける憩いの場で、購入前にじっくり味を確かめられる',
+    caution: '最寄り駅からは距離があるため、車での訪問が基本',
+    source: 'くじらの髭・くじらの旅チャンネルの紹介記事',
+    confidence: 'high'
+  },
+  {
+    name: '(有)茶友',
+    region: 'saga',
+    area: '長崎県東彼杵郡東彼杵町一ツ石郷（そのぎ茶）',
+    tea_types: ['green'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:3, quiet:3, casual:2, traditional:4, fashionable:1, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '東彼杵町でそのぎ茶を扱う地域の茶園',
+    reason: 'そのぎ茶の産地に根ざした生産者で、茶葉の購入に向く',
+    caution: '喫茶や見学対応の有無は事前確認がおすすめ',
+    source: 'そのぎ茶生産振興協議会の情報',
+    confidence: 'low'
+  },
+  {
+    name: '御慶緑茶 OK.GREEN.TEA',
+    region: 'saga',
+    area: '長崎県東彼杵郡東彼杵町千綿宿郷（そのぎ茶）',
+    tea_types: ['green'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:5, staff_interaction:4, quiet:4, casual:4, traditional:2, fashionable:4, sweets:3, tea_leaf_purchase:4, solo_friendly:4 },
+    summary: '特急列車の車窓からも見える、そのぎ茶カフェ',
+    reason: '「ふたつ星4047」が目の前を通る立地のユニークなそのぎ茶カフェで、観光と一緒に楽しめる',
+    caution: '席数が限られるため、混雑する時間帯は待つ場合がある',
+    source: 'NCC長崎文化放送の紹介記事',
+    confidence: 'high'
+  },
+  {
+    name: 'ちゃいむ',
+    region: 'saga',
+    area: '長崎県東彼杵郡東彼杵町八反田郷（そのぎ茶）',
+    tea_types: ['matcha','green'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:4, staff_interaction:3, quiet:4, casual:4, traditional:2, fashionable:5, sweets:4, tea_leaf_purchase:3, solo_friendly:4 },
+    summary: 'そのぎ茶の茶農家が営む、週末限定の抹茶カフェ',
+    reason: '日本一を受賞歴のある茶農家がつくる抹茶を、週末限定のカフェでじっくり味わえる',
+    caution: '週末限定の営業なので、訪問日は事前に確認が必要',
+    source: '住まいリングさせぼの紹介記事',
+    confidence: 'medium'
+  },
+  {
+    name: '永尾製茶問屋',
+    region: 'saga',
+    area: '佐賀県嬉野市嬉野町下宿丙',
+    tea_types: ['green'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:4, quiet:3, casual:3, traditional:4, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '嬉野温泉街にある老舗の茶問屋',
+    reason: '嬉野茶の産地問屋として長く営業しており、茶葉をじっくり選んで購入できる',
+    caution: '喫茶スペースよりも茶葉の購入・卸がメインの問屋',
+    source: '永尾製茶問屋公式サイト',
+    confidence: 'medium'
+  },
+  {
+    name: '相川製茶舗',
+    region: 'saga',
+    area: '佐賀県嬉野市嬉野町下宿甲',
+    tea_types: ['green'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:4, quiet:3, casual:3, traditional:4, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '嬉野温泉街で嬉野茶を扱う製茶舗',
+    reason: '地元で長く営業する製茶舗で、通販にも対応した嬉野茶を購入できる',
+    caution: '喫茶スペースよりも茶葉の購入がメインの店',
+    source: '相川製茶舗オンラインショップ',
+    confidence: 'medium'
+  },
+  {
+    name: '嬉野茶専門店 中島美香園',
+    region: 'saga',
+    area: '佐賀県嬉野市嬉野町下宿乙',
+    tea_types: ['green','matcha'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:4, staff_interaction:4, quiet:3, casual:3, traditional:3, fashionable:3, sweets:2, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '嬉野温泉街にある嬉野茶専門店',
+    reason: '嬉野茶専門店として、温泉街の散策のついでに茶葉を選んで購入できる',
+    caution: '喫茶利用については事前の確認が安心',
+    source: 'るるぶ&more.・嬉野温泉観光協会の紹介',
+    confidence: 'medium'
+  },
+  {
+    name: 'お茶の嬉野園',
+    region: 'saga',
+    area: '佐賀県嬉野市嬉野町下宿甲',
+    tea_types: ['green'],
+    alcohol: false,
+    profile: { tea_quality:4, beginner_friendly:3, staff_interaction:3, quiet:3, casual:3, traditional:4, fashionable:2, sweets:1, tea_leaf_purchase:5, solo_friendly:3 },
+    summary: '香り・旨み・渋みが特徴の嬉野茶を扱う地元の茶舗',
+    reason: '嬉野茶ならではの特徴的な香りと味わいの茶葉を、通販にも対応しながら販売',
+    caution: '喫茶スペースよりも茶葉の購入がメインの店',
+    source: 'kachi kachi plus・嬉野温泉観光協会の紹介',
+    confidence: 'medium'
+  },
+  {
+    name: 'Tea Salon TSUBAKI',
+    region: 'saga',
+    area: '佐賀県嬉野市嬉野町下宿乙（和多屋別荘）',
+    tea_types: ['green','wakocha','matcha'],
+    alcohol: false,
+    profile: { tea_quality:5, beginner_friendly:3, staff_interaction:4, quiet:5, casual:2, traditional:3, fashionable:5, sweets:4, tea_leaf_purchase:2, solo_friendly:3 },
+    summary: '老舗旅館「和多屋別荘」内にある、夜も営業する茶サロン',
+    reason: '温泉旅館ならではの上質な空間で、夜の時間帯にもお茶を楽しめる珍しいサロン',
+    caution: '旅館施設内のため、宿泊者以外の利用可否や営業時間は事前確認がおすすめ',
+    source: '和多屋別荘公式サイト',
+    confidence: 'high'
+  },
 ];
 
 const LOADING_MESSAGES = [
@@ -1066,8 +1595,9 @@ const TEA_TYPE_MAP = {
 const REGION_MAP = {
   '福岡市内（天神・博多など中心部〜市内各所）': 'fukuoka',
   '糸島市': 'itoshima',
-  '八女市・星野村（お茶の産地）': 'yame',
+  '八女市・星野村・久留米市・朝倉市（お茶の産地）': 'yame',
   '北九州市': 'kitakyushu',
+  '飯塚市・直方市（筑豊エリア）': 'iizuka',
   '佐賀県（佐賀市・嬉野市・唐津市）': 'saga'
 };
 
