@@ -370,6 +370,32 @@
     padding-top:1rem;
   }
 
+  .gate{
+    min-height:70vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:2rem 1rem;
+  }
+  .gate h2{margin-bottom:.4rem;}
+  .gate p{color:var(--ink-soft); font-size:.9rem; margin-bottom:1.6rem;}
+  .gate input[type="password"]{
+    font-family:inherit;
+    font-size:1rem;
+    padding:.7rem .9rem;
+    border:1px solid var(--line);
+    border-radius:3px;
+    background:transparent;
+    color:var(--ink);
+    text-align:center;
+    width:100%;
+    max-width:220px;
+    margin-bottom:1rem;
+  }
+  .gate .err{color:var(--danger); font-size:.85rem; min-height:1.2em; margin-bottom:.6rem;}
+
   @media (max-width:480px){
     .q-sub{margin-left:0;}
     .shop-top{flex-wrap:wrap;}
@@ -391,13 +417,44 @@
     <p>8つの質問に答えると、市内の専門店から近郊の産地・お茶バーまで含めて調べた実在するお店の情報をもとに、相性のよい3軒をお伝えします。</p>
   </div>
 
-  <div id="app"></div>
+  <div id="gate" class="gate">
+    <h2>🍵 合言葉を入力してください</h2>
+    <p>サークルメンバー限定で共有しているページです。<br>合言葉はグループ内でお知らせしています。</p>
+    <input type="password" id="gate-input" placeholder="合言葉" autocomplete="off">
+    <div class="err" id="gate-err"></div>
+    <button class="primary" onclick="checkGate()">開く</button>
+  </div>
+
+  <div id="app" style="display:none;"></div>
 
   <div class="free-note" id="footnote" style="display:none;">
     店舗情報は、公式サイトや公開されている紹介記事をもとにまとめたものです（アプリ作成時点の情報）。最新の営業状況やメニューは、訪問前に各店舗の公式情報でご確認ください。
   </div>
 </div>
 
+<script>
+const GATE_PASSCODE = 'MBteaI2026'; // ここを好きな合言葉に変更してください
+
+function checkGate(){
+  const val = document.getElementById('gate-input').value;
+  if(val === GATE_PASSCODE){
+    try{ sessionStorage.setItem('mbteai_unlocked', '1'); }catch(e){}
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+  } else {
+    document.getElementById('gate-err').textContent = '合言葉が違います';
+  }
+}
+document.getElementById('gate-input').addEventListener('keydown', e => {
+  if(e.key === 'Enter') checkGate();
+});
+try{
+  if(sessionStorage.getItem('mbteai_unlocked') === '1'){
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+  }
+}catch(e){}
+</script>
 <script>
 const QUESTIONS = [
   {
